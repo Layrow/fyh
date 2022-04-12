@@ -1,5 +1,6 @@
 score,uid,subject_id,score;
 new line add
+怎么回事啊,不能合并
 select
     uid,
     subject_id,
