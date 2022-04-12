@@ -1,6 +1,61 @@
-晚上辛苦弄一下这个经济分析，结合一下武聪，这边我的去找一下业主。
-还有张保国的费用，他要去安徽项目了，晚上要给他送行喝酒了
-hello
-word
-wq
-hadoop
+score,uid,subject_id,score;
+
+select
+    uid,
+    subject_id,
+    score,
+    avg(score) over(partition by subject_id) avg
+from score
+
+
+select
+    uid,
+    if(score>=avg,1,0) flag
+from(
+    select
+        uid,
+        subject_id,
+        score,
+        avg(score) over(partition by subject_id) avg
+    from score
+    )t1
+
+select
+    uid,
+    sum(flag)  sum_flag
+from(
+    select
+        uid,
+        if(score>=avg,1,0) flag
+    from(
+        select
+            uid,
+            subject_id,
+            score,
+            avg(score) over(partition by subject_id) avg
+        from score
+        )t1)t2
+group by uid
+
+
+
+select
+    uid
+from(
+    select
+        uid,
+        sum(flag)  sum_flag
+    from(
+        select
+            uid,
+            if(score>=avg,1,0) flag
+        from(
+            select
+                uid,
+                subject_id,
+                score,
+                avg(score) over(partition by subject_id) avg
+            from score
+            )t1)t2
+    group by uid) t3
+where t3.sum_flag>=3;
