@@ -1,6 +1,7 @@
 score,uid,subject_id,score;
 new line add
 怎么回事啊,不能合并
+修改才能合并吗
 select
     uid,
     subject_id,
