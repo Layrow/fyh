@@ -1,5 +1,5 @@
 score,uid,subject_id,score;
-
+new line add
 select
     uid,
     subject_id,
